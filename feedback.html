@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зворотний зв'язок - Корпорація «НОВАТЕК»</title>
+  <!-- ЗОВНІШНЯ таблиця стилів -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- =================================================================
+       ВНУТРІШНЯ таблиця стилів (сторінка «Зворотний зв'язок»).
+       Розкладка форми виконана модулем FLEX (flex-контейнер + flex-елементи).
+       ================================================================= -->
+  <style>
+    /* (1) FLEX-КОНТЕЙНЕР: сама форма */
+    form.feedback {
+      display: flex;                     /* увімкнення flex-розкладки */
+      flex-flow: row wrap;               /* flex-direction + flex-wrap */
+      justify-content: space-between;    /* розподіл по головній осі */
+      align-items: stretch;              /* вирівнювання по поперечній осі */
+      align-content: flex-start;         /* вирівнювання ліній переносу */
+      gap: 22px;
+    }
+
+    /* (2) FLEX-ЕЛЕМЕНТИ: два <fieldset> — дві колонки форми */
+    form.feedback fieldset {
+      display: flex;                     /* fieldset теж flex-контейнер */
+      flex-direction: column;            /* поля — вертикально */
+      flex-grow: 1;                      /* дозволяємо рости */
+      flex-shrink: 1;                    /* дозволяємо стискатися */
+      flex-basis: 46%;                   /* початкова ширина */
+      gap: 14px;
+    }
+    /* порядок елементів через властивість order */
+    .fieldset-personal { order: 1; }
+    .fieldset-message  { order: 2; }
+
+    /* (3) Рядки форми — вкладені flex-контейнери */
+    form.feedback .form-row { display: flex; flex-direction: column; }
+
+    /* (4) textarea розтягується завдяки flex-grow */
+    .fieldset-message .form-row--details { flex-grow: 1; }
+    .fieldset-message textarea { flex-grow: 1; min-height: 130px; resize: vertical; }
+
+    /* (5) Чекбокс згоди та кнопки — окремі flex-елементи на всю ширину */
+    form.feedback .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      flex-basis: 100%;                  /* окремий рядок */
+      order: 3;
+      align-self: center;
+    }
+    form.feedback .btn-row {
+      flex-basis: 100%;
+      order: 4;
+      display: flex;
+      justify-content: flex-end;         /* кнопки притиснуті праворуч */
+      gap: 12px;
+      align-self: flex-end;
+    }
+
+    /* (6) Емодзі-підказка у заголовку через псевдоелемент ::before */
+    form.feedback legend::before { content: "✉ "; color: hsl(154 60% 22%); }
+
+    /* (7) Адаптивність: на вузьких екранах поля стають на всю ширину */
+    @media (max-width: 780px) {
+      form.feedback fieldset { flex-basis: 100%; }
+      form.feedback .btn-row { justify-content: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo-link" href="index.html">
+      <img src="img/logo.svg" alt="Логотип корпорації «НОВАТЕК»" width="48" height="48">
+      <span>
+        <span id="brand-name">НОВАТЕК</span><br>
+        <span class="brand-slogan">технологічна корпорація</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Головна</a>
+      <a href="directions.html">Напрями діяльності</a>
+      <a href="feedback.html" class="active">Зворотний зв'язок</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <main>
+    <section class="card">
+      <h2>Зворотний зв'язок</h2>
+      <p>
+        Заповніть, будь ласка, форму нижче - і ми обов'язково відповімо вам
+        протягом одного робочого дня. Поля, позначені зірочкою (*), є обов'язковими.
+      </p>
+
+      <form class="feedback" action="#" method="post">
+
+        <fieldset class="fieldset-personal">
+          <legend>Персональна інформація</legend>
+
+          <div class="form-row">
+            <label for="pib">1. Прізвище та ім'я *</label>
+            <input type="text" id="pib" name="pib" placeholder="Наприклад: Іваненко Іван" required>
+          </div>
+
+          <div class="form-row">
+            <label for="email">2. E-mail *</label>
+            <input type="email" id="email" name="email" placeholder="ivanenko@example.com" required>
+          </div>
+
+          <div class="form-row">
+            <label for="age">3. Вік</label>
+            <input type="number" id="age" name="age" min="6" max="120" placeholder="Наприклад: 22">
+          </div>
+
+          <div class="form-row">
+            <label for="education">4. Освіта</label>
+            <select id="education" name="education">
+              <option value="">Оберіть рівень освіти</option>
+              <option value="full">Повна загальна середня</option>
+              <option value="incomplete">Неповна вища (бакалаврат)</option>
+              <option value="higher">Вища (магістр, спеціаліст)</option>
+              <option value="professional">Професійна (коледж, училище)</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset-message">
+          <legend>Зворотний зв'язок</legend>
+
+          <div class="form-row">
+            <label for="purpose">5. Мета зворотного зв'язку *</label>
+            <select id="purpose" name="purpose" required>
+              <option value="">Оберіть мету звернення</option>
+              <option value="cooperation">Співпраця</option>
+              <option value="copyright">Скарга на порушення права власності</option>
+              <option value="proposal">Пропозиція</option>
+              <option value="bug">Наявність помилки</option>
+            </select>
+          </div>
+
+          <div class="form-row form-row--details">
+            <label for="details">6. Детально *</label>
+            <textarea id="details" name="details" rows="6" cols="40"
+                      maxlength="500" placeholder="Опишіть ваше звернення (до 500 символів)..."
+                      required></textarea>
+            <p class="hint">Максимальна кількість символів - 500 (атрибут maxlength).</p>
+          </div>
+
+          <div class="form-row">
+            <label for="attachment">Додати файл (за бажанням):</label>
+            <input type="file" id="attachment" name="attachment">
+          </div>
+        </fieldset>
+
+        <div class="consent">
+          <input type="checkbox" id="agree" name="agree" required>
+          <label for="agree">
+            Я згоден(на) на обробку моїх персональних даних відповідно до Закону України
+            «Про захист персональних даних» *
+          </label>
+        </div>
+
+        <div class="btn-row">
+          <button type="submit" class="btn">Надіслати звернення</button>
+          <button type="reset" class="btn btn-ghost">Очистити форму</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>НОВАТЕК</h4>
+        <p>01001, м. Київ, вул. Хрещатик, 22, офіс 501. Телефони: +380 (44) 591-00-00, +380 (67) 591-00-00.</p>
+        <p>Технології, які працюють на майбутнє України.</p>
+      </div>
+      <div>
+        <h4>Сторінки</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="directions.html">Напрями діяльності</a></li>
+          <li><a href="feedback.html">Зворотний зв'язок</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Корпорація «НОВАТЕК». Усі права захищено.</p>
+  </div>
+</footer>
+
+</body>
+</html>

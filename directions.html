@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Напрями діяльності - Корпорація «НОВАТЕК»</title>
+  <!-- ЗОВНІШНЯ таблиця стилів -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- =================================================================
+       ВНУТРІШНЯ таблиця стилів (стилі сторінки «Напрями діяльності»).
+       Розкладка карток виконана модулем GRID.
+       ================================================================= -->
+  <style>
+    /* (1) Вимога варіанту: блок «назва корпорації та її логотип»
+        фіксований зверху → position: fixed */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background-color: white;
+    }
+    body { padding-top: 104px; }
+
+    /* (2) GRID-контейнер для карток напрямів (адаптивна сітка) */
+    .dir-grid {
+      display: grid;                                            /* display: grid */
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 26px;
+      align-content: start;
+      margin-top: 22px;
+    }
+    /* grid-елементи */
+    .dir-card { grid-column: auto; align-self: stretch; }
+
+    /* (3) Вимога варіанту: рамка картки напряму темно-помаранчевого кольору,
+        права межа - суцільна середньої товщини, решта сторін - подвійні */
+    .dir-card {
+      border-right: 3px solid #C1440E;      /* solid, medium */
+      border-top: 6px double #C1440E;
+      border-bottom: 6px double #C1440E;
+      border-left: 6px double #C1440E;
+      border-radius: 0;
+    }
+
+    /* (4) Вимога варіанту: текст «зв'язок з державними органами» має меншу
+        вагу і висоту гліфів шрифту та є похилим */
+    .gov {
+      font-weight: 300;                     /* менша вага гліфів */
+      font-size: 0.82rem;                   /* менша висота гліфів */
+      font-style: italic;                   /* похилий */
+      color: rgb(107, 114, 128);
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dotted rgb(209, 213, 219);
+    }
+
+    .dir-card figure { margin-bottom: 14px; }
+    .dir-card img { display: block; width: 100%; border-radius: 0; }
+    .dir-card figcaption {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgb(107, 114, 128);
+      margin-top: 6px;
+    }
+
+    /* (5) Вимога варіанту: при ФОКУСУВАННІ на ілюстративному фото насиченість
+        його кольорів зростає удвічі (200%) */
+    .dir-card figure img { transition: filter 0.45s ease; cursor: pointer; }
+    .dir-card figure img:focus {
+      filter: saturate(200%);                          /* ×2 насиченість */
+      outline: 2px dashed hsl(154 60% 22%);
+      outline-offset: 4px;
+    }
+
+    /* (6) Вимога варіанту: посилання в момент кліку — темно-зелений колір */
+    a:active { color: hsl(154 60% 22%); }
+
+    /* (7) АНІМАЦІЯ появи карток: @keyframes + animation (2D-трансформація) */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    .dir-card { animation: cardIn 0.55s ease both; }
+    .dir-card:nth-child(2) { animation-delay: 0.08s; }
+    .dir-card:nth-child(3) { animation-delay: 0.16s; }
+    .dir-card:nth-child(4) { animation-delay: 0.24s; }
+    .dir-card:nth-child(5) { animation-delay: 0.32s; }
+    .dir-card:nth-child(6) { animation-delay: 0.4s; }
+
+    @keyframes softPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(193, 68, 14, 0.35); }
+      50%      { box-shadow: 0 0 0 8px rgba(193, 68, 14, 0); }
+    }
+    .dir-card figure { animation: softPulse 3s ease-in-out infinite; }
+
+    /* (8) Сусідній комбінатор (+) як приклад селектора */
+    .dir-card h3 + p { margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo-link" href="index.html">
+      <img src="img/logo.svg" alt="Логотип корпорації «НОВАТЕК»" width="48" height="48">
+      <span>
+        <span id="brand-name">НОВАТЕК</span><br>
+        <span class="brand-slogan">технологічна корпорація</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Головна</a>
+      <a href="directions.html" class="active">Напрями діяльності</a>
+      <a href="feedback.html">Зворотний зв'язок</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <main>
+    <section class="card">
+      <h2>Напрями діяльності</h2>
+      <p>
+        Корпорація «НОВАТЕК» працює за шістьма стратегічними напрямами. Кожен напрям
+        реалізує окремий департамент, що взаємодіє з відповідними державними органами
+        України у межах чинного законодавства.
+      </p>
+
+      <div class="dir-grid">
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir1_ai.svg" alt="Штучний інтелект та аналіз даних" tabindex="0">
+            <figcaption>Центр штучного інтелекту «НОВАТЕК AI»</figcaption>
+          </figure>
+          <h3>1. Штучний інтелект та аналіз даних</h3>
+          <p>
+            Розробляємо моделі машинного навчання, системи обробки великих даних та
+            комп'ютерного зору для промисловості, медицини й державного управління.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Міністерство цифрової трансформації
+            України, Національний фонд досліджень України.
+          </p>
+        </article>
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir2_cloud.svg" alt="Хмарні технології та інфраструктура" tabindex="0">
+            <figcaption>Хмарна платформа «NOVA Cloud»</figcaption>
+          </figure>
+          <h3>2. Хмарні технології та інфраструктура</h3>
+          <p>
+            Експлуатуємо власну хмарну платформу та два дата-центри, надаємо послуги
+            IaaS, PaaS і резервного копіювання даних для бізнесу та держустанов.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Державна служба спеціального зв'язку та
+            захисту інформації України.
+          </p>
+        </article>
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir3_cyber.svg" alt="Кібербезпека" tabindex="0">
+            <figcaption>Центр кіберзахисту «NOVA Security»</figcaption>
+          </figure>
+          <h3>3. Кібербезпека</h3>
+          <p>
+            Будуємо центри моніторингу та реагування (SOC), проводимо пентести,
+            аудити безпеки та захищаємо об'єкти критичної інформаційної інфраструктури.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Кіберполіція Національної поліції України,
+            Національний координаційний центр кібербезпеки при РНБО України.
+          </p>
+        </article>
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir4_dev.svg" alt="Розробка програмного забезпечення" tabindex="0">
+            <figcaption>Продуктовий департамент розробки</figcaption>
+          </figure>
+          <h3>4. Розробка програмного забезпечення</h3>
+          <p>
+            Створюємо веб- та мобільні застосунки, корпоративні системи й державні
+            інформаційні системи: від аналітики вимог до підтримки на продакшені.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Міністерство цифрової трансформації
+            України, Міністерство освіти і науки України.
+          </p>
+        </article>
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir5_iot.svg" alt="Інтернет речей та індустріальні рішення" tabindex="0">
+            <figcaption>Департамент індустріального Інтернету речей</figcaption>
+          </figure>
+          <h3>5. Інтернет речей та індустріальні рішення</h3>
+          <p>
+            Впроваджуємо розумні системи моніторингу енергооб'єктів, транспортних
+            мереж і виробництв на базі IoT-платформи власної розробки.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Міністерство енергетики України,
+            Міністерство розвитку громад та територій України.
+          </p>
+        </article>
+
+        <article class="card dir-card">
+          <figure>
+            <img src="img/dir6_consult.svg" alt="Цифрова трансформація бізнесу" tabindex="0">
+            <figcaption>Консалтингова практика «NOVA Consulting»</figcaption>
+          </figure>
+          <h3>6. Цифрова трансформація бізнесу та консалтинг</h3>
+          <p>
+            Проводимо ІТ-аудит, будуємо дорожні карти цифровізації підприємств,
+            супроводжуємо впровадження ERP-систем та електронного документообігу.
+          </p>
+          <p class="gov">
+            Зв'язок із державними органами: Міністерство економіки України, Офіс з
+            розвитку підприємництва та експорту.
+          </p>
+        </article>
+
+      </div>
+
+      <p class="btn-row">
+        <a class="btn btn-ghost" href="index.html">&larr; На Головну сторінку</a>
+      </p>
+    </section>
+  </main>
+</div>
+
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>НОВАТЕК</h4>
+        <p>01001, м. Київ, вул. Хрещатик, 22, офіс 501. Телефони: +380 (44) 591-00-00, +380 (67) 591-00-00.</p>
+        <p>Технології, які працюють на майбутнє України.</p>
+      </div>
+      <div>
+        <h4>Сторінки</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="directions.html">Напрями діяльності</a></li>
+          <li><a href="feedback.html">Зворотний зв'язок</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Корпорація «НОВАТЕК». Усі права захищено.</p>
+  </div>
+</footer>
+
+</body>
+</html>

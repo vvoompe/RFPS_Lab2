@@ -1,0 +1,288 @@
+/* =====================================================================
+   ЗОВНІШНЯ таблиця стилів (підключена через <link> у розділі <head>)
+   Лабораторна робота № 2, варіант 6 — промо-сайт корпорації «НОВАТЕК»
+   Обраний стиль веб-дизайну: МІНІМАЛІЗМ (багато повітря, тонкі лінії,
+   стримана палітра, максимум два шрифти).
+   У кожній сторінці додатково є ВНУТРІШНЯ таблиця стилів (<style>),
+   яка перекриває ці правила для особливостей конкретної сторінки.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. СЕЛЕКТОРИ ТА БАЗОВІ СТИЛІ
+   --------------------------------------------------------------------- */
+
+/* 1.1 Універсальний селектор — скидання відступів */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 1.2 Селектор елементу — типографіка тексту */
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;   /* шрифт № 1 */
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgb(31, 41, 55);            /* спосіб задання кольору № 1 — RGB */
+  background-color: white;           /* спосіб задання кольору № 2 — ключове слово */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 1.3 Селектор групування + другий шрифт (шрифт № 2 — Georgia, веб-безпечний) */
+h1, h2, h3, .brand-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  color: #111827;                    /* спосіб задання кольору № 3 — HEX */
+  letter-spacing: 0.02em;
+}
+
+h2 { font-size: 1.5rem; margin-bottom: 14px; }
+h3 { font-size: 1.15rem; margin: 22px 0 8px; }
+
+/* 1.4 Нащадковий комбінатор (пробіл) — абзаци всередині карток */
+.card p { margin-bottom: 12px; text-align: justify; }
+
+/* 1.5 Дочірній комбінатор (>) — прямі нащадки */
+.mission-block > ol { margin: 14px 0 0 26px; }
+
+/* 1.6 Селектор атрибута — поля форми */
+input[type="email"] { text-transform: lowercase; }
+input[type="checkbox"] { accent-color: hsl(154 60% 22%); }
+
+/* 1.7 Селектори з частковим збігом атрибута */
+[href^="https"]::after { content: " ↗"; font-size: 0.75em; }   /* зовнішні посилання */
+[href$=".html"] { text-decoration: none; }                     /* внутрішні сторінки сайту */
+
+/* 1.8 Селектор ідентифікатора */
+#site-footer { background-color: #111827; color: rgb(229, 231, 235); }
+
+/* 1.9 Псевдоелемент ::selection — як виглядає виділений текст */
+::selection { background: hsl(154 60% 22%); color: white; }
+
+/* ---------------------------------------------------------------------
+   2. СІТКА СТОРІНКИ (модуль GRID)
+   --------------------------------------------------------------------- */
+
+.container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* 2.1 grid-контейнер: дві колонки (контент + бічна колонка) */
+.page-grid {
+  display: grid;                                   /* display: grid */
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 44px;
+  padding: 36px 0 44px;
+}
+
+/* 2.2 grid-елементи: вирівнювання та порядок */
+.page-grid > main    { grid-column: 1 / 2; align-self: start; }
+.page-grid > aside   { grid-column: 2 / 3; align-self: start; }
+
+/* ---------------------------------------------------------------------
+   3. ШАПКА, ЛОГОТИП, НАВІГАЦІЯ
+   --------------------------------------------------------------------- */
+
+/* 3.1 Блок «назва корпорації та логотип»: абсолютне позиціювання задано
+       у внутрішній таблиці стилів головної сторінки (position: absolute) та
+       сторінки «Напрями діяльності» (position: fixed). Тут — спільний вигляд. */
+.site-header {
+  background-color: white;
+  border-bottom: 1px solid rgb(229, 231, 235);
+}
+
+.header-inner {
+  display: flex;                     /* display: flex */
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+
+/* 3.2 Селектор класу + id-селектор для блоку бренду */
+.logo-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-link img { width: 48px; height: 48px; }
+#brand-name { font-size: 1.4rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.brand-slogan {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(107, 114, 128);
+}
+
+/* 3.3 Навігація: flex-контейнер */
+.main-nav { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+.main-nav a {
+  display: inline-block;             /* display: inline-block */
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(55, 65, 81);
+  border-bottom: 2px solid transparent;
+  /* перехід між двома станами: 4 властивості (колір тексту, рамка, фон, зсув) */
+  transition: color 0.25s ease, border-color 0.25s ease,
+              background-color 0.25s ease, transform 0.25s ease;
+}
+/* 3.4 Псевдоклас :hover — елемент з переходом між двома стилями (≥3 властивості) */
+.main-nav a:hover {
+  color: hsl(154 60% 22%);
+  background-color: rgb(244, 246, 245);
+  border-bottom-color: hsl(154 60% 22%);
+  transform: translateY(-2px);       /* 2D-трансформація */
+}
+.main-nav a.active { border-bottom-color: #111827; color: #111827; }
+/* 3.5 Псевдоклас :active — момент кліку */
+.main-nav a:active { color: hsl(154 60% 22%); }
+
+/* ---------------------------------------------------------------------
+   4. КАРТКИ, КНОПКИ, ТАБЛИЦЯ
+   --------------------------------------------------------------------- */
+
+/* 4.1 .card — relative-позиціювання (потрібне для абсолютних нащадків і z-index) */
+.card {
+  position: relative;
+  background-color: white;
+  border: 1px solid rgb(229, 231, 235);
+  border-radius: 2px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+/* 4.2 Псевдоклас :first-child + загальний селектор сестринських елементів (~) */
+.page-grid > main > .card:first-child { border-top: 3px solid #111827; }
+h3 ~ p { color: rgb(55, 65, 81); }
+
+.hero-img { display: block; width: 100%; margin-bottom: 20px; }
+
+/* 4.3 Кнопки: перехід між двома станами за 3+ властивостями */
+.btn {
+  display: inline-block;
+  padding: 11px 22px;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #111827;
+  color: white;
+  border: 1px solid #111827;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease,
+              border-color 0.25s ease, transform 0.25s ease;
+}
+.btn:hover {
+  background-color: white;
+  color: #111827;
+  border-color: hsl(154 60% 22%);
+  transform: translateY(-2px);
+}
+.btn-ghost { background-color: white; color: #111827; }
+.btn-ghost:hover { background-color: #111827; color: white; }
+.btn-row { margin-top: 18px; }
+
+/* 4.4 Таблиця: тонкі лінії, вирівнювання */
+table.founders { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+table.founders caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(107, 114, 128);
+  padding-bottom: 10px;
+}
+table.founders th, table.founders td {
+  border: 1px solid rgb(229, 231, 235);
+  padding: 9px 12px;
+  text-align: left;
+}
+table.founders thead th { background-color: rgb(249, 250, 251); font-weight: 600; }
+/* 4.5 Псевдоклас :nth-child(even) — «зебра» рядків */
+table.founders tbody tr:nth-child(even) { background-color: rgb(252, 252, 253); }
+table.founders tfoot th, table.founders tfoot td { background-color: #111827; color: white; }
+table.founders .sep { background-color: rgb(244, 246, 245); font-style: italic; }
+
+/* ---------------------------------------------------------------------
+   5. ФОРМИ (базові стилі; розкладка — модулем FLEX у внутрішній таблиці)
+   --------------------------------------------------------------------- */
+
+fieldset { border: 1px solid rgb(229, 231, 235); border-radius: 2px; padding: 22px; }
+legend {
+  padding: 0 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(107, 114, 128);
+}
+.form-row label { display: block; font-size: 0.85rem; margin-bottom: 6px; color: rgb(55, 65, 81); }
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row input[type="number"],
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: rgb(31, 41, 55);
+  background-color: white;
+  border: 1px solid rgb(209, 213, 219);
+  border-radius: 2px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+/* 5.1 Псевдоклас :focus — стан фокусування */
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: hsl(154 60% 22%);
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.12);
+}
+/* 5.2 Псевдоелемент ::placeholder */
+.form-row ::placeholder { color: rgb(156, 163, 175); font-style: italic; }
+.hint { font-size: 0.78rem; color: rgb(107, 114, 128); margin-top: 6px; }
+.consent { font-size: 0.85rem; }
+.consent input { accent-color: hsl(154 60% 22%); }
+
+/* ---------------------------------------------------------------------
+   6. ПІДВАЛ
+   --------------------------------------------------------------------- */
+
+#site-footer { padding: 30px 0; font-size: 0.85rem; margin-top: 40px; }
+#site-footer a { color: rgb(209, 213, 219); }
+#site-footer h4 { font-size: 0.75rem; letter-spacing: 0.6em; text-transform: uppercase; margin-bottom: 10px; color: white; }
+#site-footer ul { list-style: none; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 28px; }  /* grid-контейнер */
+.copyright { margin-top: 20px; font-size: 0.75rem; color: rgb(148, 163, 184); }
+
+/* ---------------------------------------------------------------------
+   7. АНІМАЦІЇ ТА АДАПТИВНІСТЬ
+   --------------------------------------------------------------------- */
+
+/* 7.1 @keyframes + animation на головній сторінці */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-img { animation: slideIn 0.7s ease both; }
+
+@keyframes accentPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }        /* 2D-трансформація scale() */
+}
+.pulse { animation: accentPulse 2.4s ease-in-out infinite; }
+
+/* 7.2 Адаптивність (медіазапити) */
+@media (max-width: 900px) {
+  .page-grid { grid-template-columns: 1fr; gap: 28px; }
+  .page-grid > aside { grid-column: 1 / 2; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero-img { display: none; }        /* display: none на вузьких екранах */
+  .main-nav { margin-left: 0; }
+}
+
+/* 7.3 Псевдоелемент ::first-letter для першого абзацу карток */
+.card > p:first-of-type::first-letter { font-size: 1.9rem; font-family: Georgia, serif; color: hsl(154 60% 22%); }
+
+/* 7.4 Псевдоелемент ::before — декоративна риска перед підзаголовками */
+h3::before { content: ""; display: inline-block; width: 22px; height: 2px; background-color: hsl(154 60% 22%); margin-right: 10px; vertical-align: middle; }

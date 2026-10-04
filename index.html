@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Головна - Корпорація «НОВАТЕК»</title>
+  <!-- ЗОВНІШНЯ таблиця стилів -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- =================================================================
+       ВНУТРІШНЯ таблиця стилів (стилі, унікальні для головної сторінки).
+       Внутрішні стилі мають пріоритет над зовнішніми.
+       ================================================================= -->
+  <style>
+    /* (1) Вимога варіанту: блок «назва корпорації та її логотип»
+        абсолютно позиціонований з 0 відступом зверху → position: absolute */
+    .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;                 /* властивість z-index */
+    }
+    body { padding-top: 104px; }   /* компенсація висоти позиціонованої шапки */
+
+    /* (2) Вимога варіанту: блок «опис мети + список завдань» має зовнішні
+        (сусідні блоки) відступи, але НЕ має внутрішніх */
+    .mission-block {
+      margin: 46px 0;              /* зовнішні відступи є */
+      padding: 0;                  /* внутрішніх відступів немає */
+      border-left: 3px solid #111827;
+    }
+
+    /* (3) Вимога варіанту: після опису мети вивести емодзі-директора.
+        Реалізовано псевдоелементом ::after з властивістю content */
+    .mission-desc::after {
+      content: " 👨‍💼";
+      font-size: 1.8rem;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    /* (4) Вимога варіанту: при наведенні курсору на таблицю засновників
+        вона масштабується на 5% → 2D-трансформація scale(1.05) */
+    .table-wrap { position: relative; }
+    table.founders {
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      transform-origin: center top;
+    }
+    table.founders:hover {
+      transform: scale(1.05);      /* +5 % */
+      box-shadow: 0 10px 26px rgba(17, 24, 39, 0.12);
+    }
+
+    /* (5) Вимога варіанту: при наведенні на адресу й телефони ЧЕРЕЗ 2 СЕКУНДИ
+        з'являється тінь від літер тексту → transition-delay: 2s + text-shadow */
+    #contacts {
+      transition: text-shadow 0.5s ease 2s;   /* затримка 2 секунди */
+    }
+    #contacts:hover {
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.55);
+    }
+
+    /* (6) Вимога: елемент з найбільшим текстовим контентом має смугу
+        прокручування → overflow-y: auto + власне оформлення скролбара */
+    .scroll-area {
+      max-height: 200px;           /* умова появи смуги прокручування */
+      overflow-y: auto;
+      padding-right: 14px;
+    }
+    /* оформлення смуги прокручування для Chrome/Edge (візуальні псевдоелементи) */
+    .scroll-area::-webkit-scrollbar { width: 10px; }
+    .scroll-area::-webkit-scrollbar-track { background: rgb(243, 244, 246); border-radius: 5px; }
+    .scroll-area::-webkit-scrollbar-thumb {
+      background: hsl(154 60% 22%);
+      border-radius: 5px;
+      border: 2px solid rgb(243, 244, 246);
+    }
+    /* оформлення смуги прокручування для Firefox */
+    .scroll-area { scrollbar-width: thin; scrollbar-color: hsl(154 60% 22%) rgb(243, 244, 246); }
+
+    /* (7) Float + z-index: «бейдж» обтікається текстом */
+    .badge {
+      float: right;                /* властивість float */
+      position: relative;
+      z-index: 2;                  /* властивість z-index */
+      margin: 0 0 10px 18px;
+      padding: 6px 14px;
+      border: 1px solid #111827;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    /* (8) Список контактів у бічній колонці */
+    .contacts-list { list-style: none; }
+    .contacts-list li { padding: 3px 0; font-size: 0.9rem; }
+
+    .highlight { color: hsl(154 60% 22%); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo-link" href="index.html">
+      <img src="img/logo.svg" alt="Логотип корпорації «НОВАТЕК»" width="48" height="48">
+      <span>
+        <span id="brand-name">НОВАТЕК</span><br>
+        <span class="brand-slogan">технологічна корпорація</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Головна</a>
+      <a href="directions.html">Напрями діяльності</a>
+      <a href="feedback.html">Зворотний зв'язок</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container page-grid">
+  <main>
+    <article class="card" id="about">
+      <img class="hero-img" src="img/hero.svg" alt="Корпорація «НОВАТЕК» - цифрові технології для України">
+      <h2>Про корпорацію</h2>
+      <div class="scroll-area" tabindex="0">
+        <p><span class="badge pulse">Нам довіряють 300+ проєктів</span>
+          Корпорація «НОВАТЕК» заснована у 2015 році групою українських ІТ-фахівців
+          із метою створення національної технологічної компанії світового рівня, що
+          розробляє власні програмні продукти, впроваджує штучний інтелект та захищає
+          цифрову інфраструктуру держави й бізнесу.
+          Ми <b>об'єднуємо</b> інженерів, науковців і підприємців, щоб <em>створювати</em>
+          <i>надійні</i> цифрові рішення, які <u>покращують</u>
+          <span class="highlight">життя людей</span> і розвивають економіку України.
+        </p>
+        <p>
+          За понад десять років роботи корпорація реалізувала понад 300 проєктів для
+          державного та приватного секторів, відкрила офіси у п'яти містах України та
+          сформувала команду з 1200 фахівців. Ми пишаємося тим, що наші розробки
+          використовуються у сфері освіти, охорони здоров'я, енергетики та оборони.
+        </p>
+        <p>
+          Детальніше про напрями роботи - на сторінці
+          <a href="directions.html">«Напрями діяльності»</a>, а історія команди - у
+          розділі <a href="#founders">«Засновники»</a> нижче.
+        </p>
+      </div>
+
+      <section class="mission-block">
+        <h3>Мета створення корпорації</h3>
+        <p class="mission-desc">
+          Сформувати потужну українську екосистему високотехнологічних продуктів і
+          послуг, яка забезпечує технологічну незалежність країни та виводить
+          українські розробки на міжнародні ринки.
+        </p>
+        <ol type="I">
+          <li>Розробляти власні програмні продукти та платформи світового рівня.</li>
+          <li>Впроваджувати технології штучного інтелекту в ключові галузі економіки.</li>
+          <li>Забезпечувати кіберзахист об'єктів критичної інформаційної інфраструктури.</li>
+          <li>Готувати нове покоління ІТ-фахівців через власну корпоративну академію.</li>
+        </ol>
+      </section>
+    </article>
+
+    <article class="card" id="founders">
+      <h2>Засновники корпорації</h2>
+      <p>
+        Корпорацію заснували шість досвідчених українських інженерів та менеджерів.
+        Загальна інформація про засновників наведена у таблиці нижче.
+      </p>
+      <div class="table-wrap">
+        <table class="founders">
+          <caption>Таблиця 1 - Засновники корпорації «НОВАТЕК» та відомості про них</caption>
+          <thead>
+            <tr>
+              <th rowspan="2">№ з/п</th>
+              <th rowspan="2">Прізвище та ініціали</th>
+              <th colspan="3">Відомості про засновника</th>
+            </tr>
+            <tr>
+              <th>Посада</th>
+              <th>Освіта</th>
+              <th>Досвід роботи в ІТ, років</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Коваленко О. П.</td>
+              <td>Голова правління</td>
+              <td rowspan="2">КНУ імені Тараса Шевченка, магістр комп'ютерних наук</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Шевченко М. В.</td>
+              <td>Технічний директор</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td colspan="5" class="sep">Співзасновники другого етапу (розширення правління у 2018 році)</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Бондаренко Т. С.</td>
+              <td>Фінансовий директор</td>
+              <td>КНЕУ імені Вадима Гетьмана, магістр економіки</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Кравчук А. Л.</td>
+              <td>Директор з розвитку бізнесу</td>
+              <td>Національний університет «Львівська політехніка»</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Мельник Р. Д.</td>
+              <td>Керівник центру штучного інтелекту</td>
+              <td rowspan="2">НТУУ «КПІ імені Ігоря Сікорського», магістр програмної інженерії</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Гончарук О. І.</td>
+              <td>Керівник напряму кібербезпеки</td>
+              <td>10</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="4">Загальний досвід засновників у сфері ІТ</th>
+              <td>80</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </article>
+  </main>
+
+  <aside class="card" id="contacts">
+    <h2>Контакти</h2>
+    <ul class="contacts-list">
+      <li><b>Адреса:</b> 01001, м. Київ, вул. Хрещатик, 22, офіс 501</li>
+      <li><b>Телефони:</b><br>+380 (44) 591-00-00<br>+380 (67) 591-00-00</li>
+      <li><b>E-mail:</b> <a href="mailto:info@novatek.ua">info@novatek.ua</a></li>
+      <li><b>Графік роботи:</b> пн - пт, 9:00 - 18:00</li>
+    </ul>
+    <h3>Корисні посилання</h3>
+    <ul class="contacts-list">
+      <li><a href="https://thedigital.gov.ua/" target="_blank">Міністерство цифрової трансформації України</a></li>
+      <li><a href="https://pst.knu.ua/" target="_blank">Кафедра програмних систем і технологій КНУ</a></li>
+      <li><a href="directions.html">Напрями діяльності корпорації</a></li>
+      <li><a href="feedback.html">Форма зворотного зв'язку</a></li>
+    </ul>
+  </aside>
+</div>
+
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>НОВАТЕК</h4>
+        <p>01001, м. Київ, вул. Хрещатик, 22, офіс 501. Телефони: +380 (44) 591-00-00, +380 (67) 591-00-00.</p>
+        <p>Технології, які працюють на майбутнє України.</p>
+      </div>
+      <div>
+        <h4>Сторінки</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="directions.html">Напрями діяльності</a></li>
+          <li><a href="feedback.html">Зворотний зв'язок</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Корпорація «НОВАТЕК». Усі права захищено.</p>
+  </div>
+</footer>
+
+</body>
+</html>
